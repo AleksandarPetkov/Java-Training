@@ -3,6 +3,7 @@ package predicates.func.in;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
 public class Main {
@@ -16,9 +17,15 @@ public class Main {
         printEmployeesByAge(employees, "Employees OVER 30", employee -> employee.getAge() > 30);
         printEmployeesByAge(employees, "Employees UNDER 30", employee -> employee.getAge() < 30);
 
+        //Other way to use Predicate
         System.out.println("Employees UNDER 25 Using EmployeesUnder25 impl Predicate<Employee>");
         EmployeesUnder25<Employee> under25 = new EmployeesUnder25<>();
         employees.stream().filter(under25).forEach(e -> System.out.println(e.getName()));
+
+        //We can chain Predicates with .and()
+        IntPredicate over35 = i -> i > 7;
+        IntPredicate under24 = i -> i < 24;
+        System.out.println(over35.and(under24).test(23));
     }
 
     public static void printEmployeesByAge(List<Employee> employees, String ageText,
